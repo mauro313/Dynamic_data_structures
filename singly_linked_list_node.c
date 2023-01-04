@@ -69,7 +69,7 @@ sll_node_t** sll_node_get_next_referece(sll_node_t* node){
 int sll_node_link_node(sll_node_t** origin,sll_node_t* destiny){
   if(origin == NULL){
     printf("sll_node double pointer is NULL");
-    exit(-6);  
+    exit(-6);
   }
   int returned = 0;
   if(*origin != NULL){
@@ -84,7 +84,7 @@ int sll_node_link_node(sll_node_t** origin,sll_node_t* destiny){
 void sll_node_add_node_end_iterative(sll_node_t** head,sll_node_t* new_node){
   if(head == NULL){
     printf("sll_node double pointer is NULL");
-    exit(-7);  
+    exit(-7);
   }
   if(*head == NULL){
     *head = new_node;
@@ -102,7 +102,7 @@ void sll_node_add_node_end_iterative(sll_node_t** head,sll_node_t* new_node){
 void sll_node_add_node_end_recursive(sll_node_t** head,sll_node_t* new_node){
   if(head == NULL){
     printf("sll_node double pointer is NULL");
-    exit(-8);  
+    exit(-8);
   }
   if(*head == NULL){
     *head = new_node;
@@ -116,7 +116,7 @@ void sll_node_add_node_end_recursive(sll_node_t** head,sll_node_t* new_node){
 void sll_node_add_value_end(sll_node_t** head,t_elem value){
   if(head == NULL){
     printf("sll_node double pointer is NULL");
-    exit(-9);  
+    exit(-9);
   }
   sll_node_t* new_node = sll_node_new(value);
   sll_node_add_node_end_iterative(head,new_node);
@@ -166,42 +166,39 @@ void sll_node_all_printf_recursive(sll_node_t* head,void (*print)(t_elem)){
   }
 }
 
-// retorna la referencia del nodo buscado si se encuentra, en caso contrario retorna un puntero que contiene un puntero a NULL. Uso
+// retorna la referencia del nodo buscado si se encuentra, en caso contrario retorna NULL. Uso
 // de recursividad
 sll_node_t** sll_node_search_recursive(sll_node_t** head,t_elem value,int(*compare)(t_elem,t_elem)){
-  sll_node_t** auxiliar = NULL;
   if(head == NULL){
-    auxiliar = NULL;
+    printf("sll_node double pointer is NULL");
+    exit(-13);
+  }
+  sll_node_t** auxiliar = NULL;
+  if(*head!=NULL && compare(sll_node_get_value(*head),value)!=0){
+    auxiliar = sll_node_search_recursive(&(*head)->next,value,compare);
   }
   else{
-    if(*head!=NULL && compare(sll_node_get_value(*head),value)!=0){
-      auxiliar = sll_node_search_recursive(&(*head)->next,value,compare);
-    }
-    else{
-      auxiliar = head;
-      if(*auxiliar == NULL){
-        auxiliar = NULL;  
-      }
+    auxiliar = head;
+    if(*auxiliar == NULL){
+      auxiliar = NULL;
     }
   }
   return auxiliar;
 }
 
-// retorna la referencia del nodo buscado si se encuentra, en caso contrario retorna un puntero que continene un puntero a NULL.
+// retorna la referencia del nodo buscado si se encuentra, en caso contrario retorna NULL.
 //version iterativa.
 sll_node_t** sll_node_search_iterative(sll_node_t** head,t_elem value,int (*compare)(t_elem,t_elem)){
-  sll_node_t** auxiliar = NULL;
   if(head == NULL){
-    auxiliar == NULL;
+    printf("sll_node double pointer is NULL");
+    exit(-14);
   }
-  else{
-    auxiliar = head;
-    while((*auxiliar)!=NULL && compare((*auxiliar)->value,value)!=0){
-      auxiliar = &(*auxiliar)->next;
-    }
-    if(*auxiliar == NULL){
-      auxiliar == NULL;   
-    }
+  sll_node_t** auxiliar = head;
+  while((*auxiliar)!=NULL && compare((*auxiliar)->value,value)!=0){
+    auxiliar = &(*auxiliar)->next;
+  }
+  if(*auxiliar == NULL){
+    auxiliar == NULL;
   }
   return auxiliar;
 }
@@ -211,7 +208,7 @@ sll_node_t** sll_node_search_iterative(sll_node_t** head,t_elem value,int (*comp
 sll_node_t* sll_node_remove(sll_node_t** head,t_elem value,int (*compare)(t_elem,t_elem)){
   if(head == NULL){
     printf("sll_double pointer is NULL");
-    exit(-11);
+    exit(-15);
   }
   sll_node_t* node_to_remove =NULL;
   sll_node_t* auxiliar = *head;
