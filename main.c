@@ -15,42 +15,49 @@ void queue_destroy(queue_t** queue);
 void stack_destroy(stack_t** stack);
 
 int main(void){
-  //creo la lista de 20 enteros
+  //creation of a list of 20 int
   list_t* list = list_int(20);
   
-  //creo el stack y la queue que van a ser utilizados para el procedimiento separate list
+  //creation of the stack and queue that will were used in separate_list
   stack_t* stack = stack_new(20);
   queue_t* queue = queue_new(20);
 
-  //imprimo la lista de enteros
+  //print the list.
   list_traverse(list,look_andPrintf,NULL);
   printf("\n\n");
 
   //separo los enteros pares e impares en una queue y un stack
+  //separate the even and odd elements in the queue and stack
   separate_list(&list,queue,stack);
 
-  //imprimo la queue
-  queue_printf(queue,printf_int);
-  printf("\n");
+  //print the queue
   queue_traverse(queue,look_andPrintfElement,NULL);
   printf("\n\n");
 
-  //imprimo el stack
-  stack_printf(stack,printf_int);
-  printf("\n");
+  //print the stack
   stack_traverse(stack,look_andPrintfElement,NULL);
 
-  //libero memoria del stack y la queue
+  //free the used memory.
   queue_destroy(&queue);
   stack_destroy(&stack);
   
+  list_free(&list);
+
   return 0;    
 }
 
-///******Ejemplo de la aplicacion de las 3 implementaciones*******///
+///******Examples of application of the tree implementations.*******///
 
 //Procedimento para separar los elementos de una lista en un stack y una queue
 //Los elemento pares se agrupan en la queue y los impares en el stack 
+/**
+ * @brief procedure that separates the elements of a list in a stack and in a queue.
+ * In the queue will going the even elements and in the stack the odds.
+ * 
+ * @param list 
+ * @param queue 
+ * @param stack 
+ */
 void separate_list(list_t** list,queue_t* queue,stack_t* stack){
   while(!list_isempty(*list)){
     t_elem auxiliar = list_get(*list,0);
@@ -65,7 +72,11 @@ void separate_list(list_t** list,queue_t* queue,stack_t* stack){
   list_free(list);
 }
 
-//elimina una queue de enteros
+/**
+ * @brief delete a int queue.
+ * 
+ * @param queue 
+ */
 void queue_destroy(queue_t** queue){
   while(!queue_isempty(*queue)){
     dequeue(*queue);  
@@ -73,7 +84,11 @@ void queue_destroy(queue_t** queue){
   queue_free(queue);  
 }
 
-//elimina un stack de enteros
+/**
+ * @brief delete a int stack.
+ * 
+ * @param stack 
+ */
 void stack_destroy(stack_t** stack){
   while(!stack_isempty(*stack)){
     pop(*stack);  
@@ -81,7 +96,12 @@ void stack_destroy(stack_t** stack){
   stack_free(stack); 
 }
 
-//crea una lista de enteros
+/**
+ * @brief create a int list of the specified size.
+ * 
+ * @param maxsize 
+ * @return list_t* 
+ */
 list_t* list_int(int maxsize){
   list_t* new = list_new(maxsize);
   srand(time(NULL));
@@ -91,25 +111,50 @@ list_t* list_int(int maxsize){
   return new;    
 }
 
-//funcion auxiliar para list_traverse
+/**
+ * @brief auxilar function for list_traverse.
+ * 
+ * @param value 
+ * @param index 
+ * @param ctx 
+ * @return true 
+ * @return false 
+ */
 bool look_andPrintf(t_elem value,int index,void* ctx){
   printf("%i ",value);
   return true;    
 }
 
-//funcion auxiliar para  queue_traverse y stack_traverse
+/**
+ * @brief auxiliar function for queue_traverse and stack_traverse.
+ * 
+ * @param value 
+ * @param context 
+ * @return true 
+ * @return false 
+ */
 bool look_andPrintfElement(t_elem value,void* context){
   printf("%d ",value);
   return true;
 }
 
 
-//procedimientos auxiliares
+/**
+ * @brief auxiliar function to compare int values.
+ * 
+ * @param value1 
+ * @param value2 
+ * @return int 
+ */
 int compare_int(t_elem value1,t_elem value2){
   return value1-value2;  
 }
 
+/**
+ * @brief auxiliar procedure to print int values.
+ * 
+ * @param value 
+ */
 void printf_int(t_elem value){
   printf("%i ",value);  
 }
-///////////////////////////
