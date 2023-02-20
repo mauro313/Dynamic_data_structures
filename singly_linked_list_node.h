@@ -14,13 +14,15 @@ void sll_node_free(sll_node_t** node);
 
 t_elem sll_node_get_value(sll_node_t* node);
 
+void sll_node_set_value(sll_node_t** node,t_elem value);
+
 bool sll_node_nextisnull(sll_node_t* node);
 
 sll_node_t* sll_node_get_next(sll_node_t* node);
 
 sll_node_t** sll_node_get_next_referece(sll_node_t* node);
 
-int sll_node_link_node(sll_node_t** origin,sll_node_t* destiny);
+bool sll_node_link_node(sll_node_t** origin,sll_node_t* destiny);
 
 void sll_node_add_node_end_iterative(sll_node_t** head,sll_node_t* new_node);
 

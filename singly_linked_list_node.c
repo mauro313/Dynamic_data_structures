@@ -1,22 +1,29 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "singly_linked_list_node.h"
-// varias de las funciones pueden realizarse utilizando la recursividad. El problema radica en la
-//complejidad espacial
 
-//se crea un nuevo nodo.
+/**
+ * @brief creation of a new node.
+ *
+ * @param value
+ * @return sll_node_t*
+ */
 sll_node_t* sll_node_new(t_elem value){
   sll_node_t* new_node = (sll_node_t*)malloc(sizeof(sll_node_t));
   if(new_node == NULL){
-    printf("memory cannot be reserved for a new sll_node");
-    exit(-1);
+    printf("\nmemory cannot be reserved for a new sll_node\n");
+    exit(EXIT_FAILURE);
   }
   new_node->value = value;
   new_node->next = NULL;
   return new_node;
 }
 
-//Procedimiento para liberar la memoria de un nodo
+/**
+ * @brief free the memory of a node.
+ *
+ * @param node
+ */
 void sll_node_free(sll_node_t** node){
   if(node != NULL && *node!=NULL){
     (*node)->next = NULL;
@@ -25,20 +32,45 @@ void sll_node_free(sll_node_t** node){
   }
 }
 
-//funcion que retorna el valor de un nodo
+/**
+ * @brief return the element of a node.
+ *
+ * @param node
+ * @return t_elem
+ */
 t_elem sll_node_get_value(sll_node_t* node){
   if(node == NULL){
-    printf("sll_node pointer is null");
-    exit(-2);
+    printf("\nsll_node pointer is NULL(1)\n");
+    exit(EXIT_FAILURE);
   }
   return node->value;
 }
 
-// funcion que retorna true en caso de el siguiente sea nulo y false en caso contrario
+/**
+ * @brief set the element of a node.
+ *
+ * @param node
+ * @param value
+ */
+void sll_node_set_value(sll_node_t** node,t_elem value){
+  if(node == NULL){
+    printf("\nsll_node pointer is NULL(2)\n");
+    return;
+  }
+  (*node)->value = value;
+}
+
+/**
+ * @brief return true if the next of a node is null and false otherwise.
+ *
+ * @param node
+ * @return true
+ * @return false
+ */
 bool sll_node_nextisnull(sll_node_t* node){
   if(node == NULL){
-    printf("sll_node pointer is null");
-    exit(-3);
+    printf("\nsll_node pointer is NULL(3)\n");
+    exit(EXIT_FAILURE);
   }
   bool returned = false;
   if(node->next == NULL){
@@ -47,44 +79,64 @@ bool sll_node_nextisnull(sll_node_t* node){
   return returned;
 }
 
-// retorna el nodo siguiente
+/**
+ * @brief return the next of a node.
+ *
+ * @param node
+ * @return sll_node_t*
+ */
 sll_node_t* sll_node_get_next(sll_node_t* node){
   if(node == NULL){
-    printf("sll_node pointer is null");
-    exit(-4);
+    printf("\nsll_node pointer is NULL(4)\n");
+    exit(EXIT_FAILURE);
   }
   return node->next;
 }
 
-// retorna la referencia del nodo siguiente
+/**
+ * @brief return the next refernce of a node.
+ *
+ * @param node
+ * @return sll_node_t**
+ */
 sll_node_t** sll_node_get_next_referece(sll_node_t* node){
   if(node == NULL){
-    printf("sll_node pointer is null");
-    exit(-5);
+    printf("\nsll_node pointer is NULL(5)\n");
+    exit(EXIT_FAILURE);
   }
   return &node->next;
 }
 
-// funcion que conecta dos nodos.Devuelve 1 si se conectaron y 0 en caso contrario(*origin = null).
-int sll_node_link_node(sll_node_t** origin,sll_node_t* destiny){
+/**
+ * @brief link two nodes.Return true if *origin is not null and false otherwise.
+ *
+ * @param origin
+ * @param destiny
+ * @return bool
+ */
+bool sll_node_link_node(sll_node_t** origin,sll_node_t* destiny){
   if(origin == NULL){
-    printf("sll_node double pointer is NULL");
-    exit(-6);
+    printf("\nsll_node double pointer is NULL(1)\n");
+    exit(EXIT_FAILURE);
   }
-  int returned = 0;
+  bool returned = false;
   if(*origin != NULL){
     (*origin)->next = destiny;
-    returned = 1;
+    returned = true;
   }
   return returned;
 }
 
-// procedimiento para insertar un nodo al final de una lista de nodos
-// version iterativa
+/**
+ * @brief add a node at the end of a list of linked nodes.Iterative version.
+ *
+ * @param head
+ * @param new_node
+ */
 void sll_node_add_node_end_iterative(sll_node_t** head,sll_node_t* new_node){
   if(head == NULL){
-    printf("sll_node double pointer is NULL");
-    exit(-7);
+    printf("\nsll_node double pointer is NULL(2)\n");
+    return;
   }
   if(*head == NULL){
     *head = new_node;
@@ -98,11 +150,16 @@ void sll_node_add_node_end_iterative(sll_node_t** head,sll_node_t* new_node){
   }
 }
 
-//version recursiva de la insercion de un nodo al final de la lista
+/**
+ * @brief add a node at the end of a list of linked nodes.Recursive version.
+ *
+ * @param head
+ * @param new_node
+ */
 void sll_node_add_node_end_recursive(sll_node_t** head,sll_node_t* new_node){
   if(head == NULL){
-    printf("sll_node double pointer is NULL");
-    exit(-8);
+    printf("\nsll_node double pointer is NULL(3)\n");
+    return;
   }
   if(*head == NULL){
     *head = new_node;
@@ -112,41 +169,61 @@ void sll_node_add_node_end_recursive(sll_node_t** head,sll_node_t* new_node){
   }
 }
 
-// inserta un valor al final de la lista.
+/**
+ * @brief add a element at the end of a list of linked nodes.
+ *
+ * @param head
+ * @param value
+ */
 void sll_node_add_value_end(sll_node_t** head,t_elem value){
   if(head == NULL){
-    printf("sll_node double pointer is NULL");
-    exit(-9);
+    printf("\nsll_node double pointer is NULL(4)\n");
+    return;
   }
   sll_node_t* new_node = sll_node_new(value);
   sll_node_add_node_end_iterative(head,new_node);
 }
 
-// inserta un valor al inicio de la lista
+/**
+ * @brief add a element at the begin of a list of linked nodes.
+ *
+ * @param head
+ * @param value
+ */
 void sll_node_add_value_first(sll_node_t** head,t_elem value){
   if(head == NULL){
-    printf("sll_node double pointer is NULL");
-    exit(-10);
+    printf("\nsll_node double pointer is NULL(5)\n");
+    return;
   }
   sll_node_t* new_node = sll_node_new(value);
   new_node->next = *head;
   *head = new_node;
 }
 
-//imprime un nodo
+/**
+ * @brief print a node.
+ *
+ * @param node
+ * @param print
+ */
 void sll_node_printf(sll_node_t* node,void (*print)(t_elem)){
   if(node == NULL){
-    printf("sll_node pointer is NULL");
-    exit(-11);
+    printf("\nsll_node pointer is NULL(6)\n");
+    return;
   }
   print(node->value);
 }
 
-// imprime todos los nodos de la lista. Version iterativa
+/**
+ * @brief print a list of linked nodes.Iterative version.
+ *
+ * @param head
+ * @param print
+ */
 void sll_node_all_printf_iterative(sll_node_t* head,void (*print)(t_elem)){
   if(head == NULL){
-    printf("sll_node pointer is null\n\n");
-    exit(-12);
+    printf("\nsll_node pointer is NULL(7)\n");
+    return;
   }
   sll_node_t* auxiliar = head;
   while(auxiliar!=NULL){
@@ -155,23 +232,38 @@ void sll_node_all_printf_iterative(sll_node_t* head,void (*print)(t_elem)){
   }
 }
 
-//imprime todos los nodos de la lista.Version recursiva
+/**
+ * @brief print a list of linked nodes.Recursive version.
+ *
+ * @param head
+ * @param print
+ */
 void sll_node_all_printf_recursive(sll_node_t* head,void (*print)(t_elem)){
   if(head == NULL){
-    printf("\n");
+    printf("\nsll_node pointer is NULL(8)\n");
+    return;
   }
   else{
     print(head->value);
-    sll_node_all_printf_recursive(head->next,print);
+    if(head->next != NULL){
+      sll_node_all_printf_recursive(head->next,print);
+    }
   }
 }
 
-// retorna la referencia del nodo buscado si se encuentra, en caso contrario retorna NULL. Uso
-// de recursividad
+/**
+ * @brief search an element in a list of a linked nodes.Return the reference of the node if it exist.
+ * Recursive version.
+ *
+ * @param head
+ * @param value
+ * @param compare
+ * @return sll_node_t**
+ */
 sll_node_t** sll_node_search_recursive(sll_node_t** head,t_elem value,int(*compare)(t_elem,t_elem)){
   if(head == NULL){
-    printf("sll_node double pointer is NULL");
-    exit(-13);
+    printf("\nsll_node double pointer is NULL(6)\n");
+    exit(EXIT_FAILURE);
   }
   sll_node_t** auxiliar = NULL;
   if(*head!=NULL && compare(sll_node_get_value(*head),value)!=0){
@@ -186,12 +278,19 @@ sll_node_t** sll_node_search_recursive(sll_node_t** head,t_elem value,int(*compa
   return auxiliar;
 }
 
-// retorna la referencia del nodo buscado si se encuentra, en caso contrario retorna NULL.
-//version iterativa.
+/**
+ * @brief search an element in a list of a linked nodes.Return the reference of the node if it exist.
+ * Iterative version.
+ *
+ * @param head
+ * @param value
+ * @param compare
+ * @return sll_node_t**
+ */
 sll_node_t** sll_node_search_iterative(sll_node_t** head,t_elem value,int (*compare)(t_elem,t_elem)){
   if(head == NULL){
-    printf("sll_node double pointer is NULL");
-    exit(-14);
+    printf("\nsll_node double pointer is NULL(7)\n");
+    exit(EXIT_FAILURE);
   }
   sll_node_t** auxiliar = head;
   while((*auxiliar)!=NULL && compare((*auxiliar)->value,value)!=0){
@@ -203,17 +302,23 @@ sll_node_t** sll_node_search_iterative(sll_node_t** head,t_elem value,int (*comp
   return auxiliar;
 }
 
-// remueve un nodo de la lista que coincida con el valor buscado y lo retorna si se encuentra. Caso contrario
-//retorna NULL.
+/**
+ * @brief remove an element of a list of linked nodes.Return the node that contains the searched element.
+ *
+ * @param head
+ * @param value
+ * @param compare
+ * @return sll_node_t*
+ */
 sll_node_t* sll_node_remove(sll_node_t** head,t_elem value,int (*compare)(t_elem,t_elem)){
   if(head == NULL){
-    printf("sll_double pointer is NULL");
-    exit(-15);
+    printf("\nsll_node double pointer is NULL(8)\n");
+    exit(EXIT_FAILURE);
   }
   sll_node_t* node_to_remove =NULL;
   sll_node_t* auxiliar = *head;
   sll_node_t* prev = NULL;
-  while((auxiliar!= NULL) && (compare(auxiliar->value,value)==0)){
+  while((auxiliar!= NULL) && (compare(auxiliar->value,value)!=0)){
     prev=auxiliar;
     auxiliar=auxiliar->next;
   }

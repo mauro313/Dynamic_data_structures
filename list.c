@@ -2,12 +2,17 @@
 #include <stdlib.h>
 #include "list.h"
 
-//Funcion para crear una lista nueva
+/**
+ * @brief create a new list
+ * 
+ * @param maxsize 
+ * @return list_t* 
+ */
 list_t* list_new(int maxsize){
   list_t* list = (list_t*) malloc(sizeof(list_t));
   if(list==NULL){
-    printf("mamory cannot be reserved for a list pointer");
-    exit(-1);
+    printf("\nmemory cannot be reserved for a list pointer\n");
+    exit(EXIT_FAILURE);
   }
   list->head = NULL;
   list->maxsize = maxsize;
@@ -15,7 +20,11 @@ list_t* list_new(int maxsize){
   return list;
 }
 
-//Procedimiento para liberar la memoria de una lista
+/**
+ * @brief procedure to free the memory used in a list.
+ * 
+ * @param list 
+ */
 void list_free(list_t** list){
   if(list != NULL && *list != NULL){
     (*list)->head = NULL;
@@ -24,52 +33,68 @@ void list_free(list_t** list){
   }
 }
 
-//Funcion que retorna true si la lista esta vacia y false si no lo esta
+/**
+ * @brief return true if the list is empty and false otherwise.
+ * 
+ * @param list 
+ * @return true 
+ * @return false 
+ */
 bool list_isempty(list_t* list){
   if(list == NULL){
-    printf("list pointer is NULL");
-    exit(-2);
+    printf("\nlist pointer is NULL(1)\n");
+    exit(EXIT_FAILURE);
   }
-  bool returned = false;
-  if(list->count == 0){
-    returned = true;
-  }
-  return returned;
+  return (list->count == 0);
 }
 
-//Funcion que retorna true si la lista esta llena y false si no lo esta
+/**
+ * @brief return true if the list is full and false otherwise.
+ * 
+ * @param list 
+ * @return true 
+ * @return false 
+ */
 bool list_isfull(list_t* list){
   if(list == NULL){
-    printf("list pointer is NULL");
-    exit(-3);
+    printf("\nlist pointer is NULL(2)\n");
+    exit(EXIT_FAILURE);
   }
-  bool returned = false;
-  if(list->count == list->maxsize){
-    returned = true;
-  }
-  return returned;
+  return (list->count == list->maxsize);
 }
 
-//Funcion que retorna el tamaño de la lista
+/**
+ * @brief function that calculates the current size of a list.
+ * 
+ * @param list 
+ * @return int 
+ */
 int list_length(list_t* list){
   if(list == NULL){
-    printf("list pointer is NULL");
-    exit(-4);
+    printf("\nlist pointer is NULL(3)\n");
+    exit(EXIT_FAILURE);
   }
   return list->count;
 }
 
-//Procedimiento que permite insertar un elemento en la lista.Retorna 1 si pudo insertarse y 0 en caso contrario(lista llena).
-int list_insert(list_t* list, int index, t_elem elem){
+/**
+ * @brief insert a element in a specific position.Return true if the element was inserted and false otherwise(list full).
+ * 
+ * @param list 
+ * @param index 
+ * @param elem 
+ * @return bool 
+ */
+bool list_insert(list_t* list, int index, t_elem elem){
   if(list == NULL){
-    printf("list pointer is NULL");
-    exit(-5);
+    printf("\nlist pointer is NULL(4)\n");
+    exit(EXIT_FAILURE);
   }
   if(index<0 || index>list->count){
-    printf("invalid index");
-    exit(-6);
+    printf("\ninvalid index(1)\n");
+    exit(EXIT_FAILURE);
   }
-  int returned = 0;
+  bool returned = false;
   if(!list_isfull(list)){
     sll_node_t* new_node = sll_node_new(elem);
     sll_node_t** auxiliar = &list->head;
@@ -81,20 +106,26 @@ int list_insert(list_t* list, int index, t_elem elem){
     sll_node_link_node(&new_node,*auxiliar);
     *auxiliar = new_node;
     list->count++;
-    returned = 1;
+    returned = true;
   }
   return returned;
 }
 
-//Funcion que permite obtener un elemento de la lista
+/**
+ * @brief get the element of the specified position.
+ * 
+ * @param list 
+ * @param index 
+ * @return t_elem 
+ */
 t_elem list_get(list_t* list, int index){
   if(list == NULL){
-    printf("list pointer is NULL");
-    exit(-7);
+    printf("\nlist pointer is NULL(5)\n");
+    exit(EXIT_FAILURE);
   }
   if(index<0 || index>=list->count){
-    printf("invalid index");
-    exit(-8);
+    printf("\ninvalid index(2)\n");
+    exit(EXIT_FAILURE);
   }
   sll_node_t* auxiliar = list->head;
   int count = 0;
@@ -105,12 +136,19 @@ t_elem list_get(list_t* list, int index){
   return  sll_node_get_value(auxiliar);
 }
 
-//Funcion que retorna el indice de la lista del elemento si este se encuentra, y retorna
-//el tamaño de la lista si no.
+/**
+ * @brief search a element in a list of linked nodes.Return the index of the element if exist and the
+ * maxsize otherwise.
+ * 
+ * @param list 
+ * @param elem 
+ * @param compare 
+ * @return int 
+ */
 int list_search(list_t* list, t_elem elem, int (*compare)(t_elem,t_elem)){
   if(list == NULL){
-    printf("list pointer is NULL");
-    exit(-9);
+    printf("\nlist pointer is NULL(6)\n");
+    exit(EXIT_FAILURE);
   }
   int returned = 0;
   sll_node_t* auxiliar = list->head;
@@ -121,15 +159,20 @@ int list_search(list_t* list, t_elem elem, int (*compare)(t_elem,t_elem)){
   return returned;
 }
 
-//Procedimiento para remover un elemento de la lista
+/**
+ * @brief delete the element of the list in the selected position.
+ * 
+ * @param list 
+ * @param index 
+ */
 void list_delete(list_t* list, int index){
   if(list == NULL){
-    printf("list pointer is NULL");
-    exit(-10);
+    printf("\nlist pointer is NULL(7)\n");
+    return;
   }
   if(index<0 || index>=list->count){
-    printf("invalid index");
-    exit(-11);
+    printf("\ninvalid index(3)\n");
+    return;
   }
   int counter = 0;
   sll_node_t* remove = NULL;
@@ -151,13 +194,19 @@ void list_delete(list_t* list, int index){
   list->count--;
 }
 
-//Procedimeinto para recorrer la lista bajo una condicion y un contexto determinado
-void list_traverse(list_t *L, bool look(t_elem elem, int index, void *ctx), void *ctx){
-  if(L == NULL){
-    printf("list pointer is NULL");
-    exit(-12);
+/**
+ * @brief traverse the list using a context variable.
+ * 
+ * @param list 
+ * @param look 
+ * @param ctx 
+ */
+void list_traverse(list_t *list, bool look(t_elem elem, int index, void *ctx), void *ctx){
+  if(list == NULL){
+    printf("\nlist pointer is NULL(8)\n");
+    return;
   }
-  sll_node_t* node = L->head;
+  sll_node_t* node = list->head;
   int index = 0;
   while (sll_node_get_next(node)!=NULL && look(sll_node_get_value(node), index, ctx)) {
     node = sll_node_get_next(node);

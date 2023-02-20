@@ -2,12 +2,17 @@
 #include <stdlib.h>
 #include "stack.h"
 
-// funcion para crear un nuevo stack
+/**
+ * @brief create a new stack.
+ * 
+ * @param maxsize 
+ * @return stack_t* 
+ */
 stack_t* stack_new(int maxsize){
   stack_t* new_stack = (stack_t*)malloc(sizeof(stack_t));
   if(new_stack==NULL){
-    printf("memeory cannot be reserved for a new stack");
-    exit(-1);
+    printf("memory cannot be reserved for a new stack");
+    exit(EXIT_FAILURE);
   }
   new_stack->top = NULL;
   new_stack->count = 0;
@@ -15,7 +20,11 @@ stack_t* stack_new(int maxsize){
   return new_stack;
 }
 
-//Procedimiento para liberar la memeria de un stack
+/**
+ * @brief free the memory of a stack
+ * 
+ * @param stack 
+ */
 void stack_free(stack_t** stack){
   if(stack!=NULL && *stack!=NULL){
     (*stack)->top = NULL;
@@ -24,41 +33,57 @@ void stack_free(stack_t** stack){
   }
 }
 
-//Funcion que retorna el tamaño del stack
+/**
+ * @brief return the current size of the stack.
+ * 
+ * @param stack 
+ * @return int 
+ */
 int stack_getsize(stack_t* stack){
   if(stack == NULL){
-    printf("stack pointer is NULL");
-    exit(-2);
+    printf("\nstack pointer is NULL(1)\n");
+    exit(EXIT_FAILURE);
   }
   return stack->count;
 }
 
-//Procedimiento para añadir un elemento al stack.Retorna  cuando se agrego el valor y 0 en caso contrario(stack lleno).
-int push(stack_t* stack, t_elem elem){
+/**
+ * @brief introdue an element in a stack. Return true if the element was pushed and false otherwise (stack full). 
+ * 
+ * @param stack 
+ * @param elem 
+ * @return bool 
+ */
+bool push(stack_t* stack, t_elem elem){
   if(stack == NULL){
-    printf("stack pointer is NULL");
-    exit(-3);
+    printf("\nstack pointer is NULL(2)\n");
+    exit(EXIT_FAILURE);
   }
-  int returned = 0;
+  bool returned = false;
   if(!stack_isfull(stack)){
     sll_node_t* new_node = sll_node_new(elem);
     sll_node_link_node(&new_node,stack->top);
     stack->top = new_node;
     stack->count++;
-    returned = 1;
+    returned = true;
   }
   return returned;
 }
 
-//Funcion para remover un elemento del stack
+/**
+ * @brief remove the top element from a stack.
+ * 
+ * @param stack 
+ * @return t_elem 
+ */
 t_elem pop(stack_t* stack){
   if(stack == NULL){
-    printf("stack pointer is NULL");
-    exit(-4);
+    printf("\nstack pointer is NULL(3)\n");
+    exit(EXIT_FAILURE);
   }
   if(stack_isempty(stack)){
-    printf("stack is empty");
-    exit(-5);
+    printf("\nstack is empty\n");
+    exit(EXIT_FAILURE);
   }
   t_elem returned = sll_node_get_value(stack->top);
   sll_node_t* auxiliar = stack->top;
@@ -68,50 +93,64 @@ t_elem pop(stack_t* stack){
   return returned;
 }
 
-//Funcion para conocer el elemento del tope del stack
+/**
+ * @brief allows to see the top element from a stack
+ * 
+ * @param stack 
+ * @return t_elem 
+ */
 t_elem top(stack_t* stack){
   if(stack == NULL){
-    printf("stack pointer is NULL");
-    exit(-6);
+    printf("\nstack pointer is NULL(4)\n");
+    exit(EXIT_FAILURE);
   }
   if(stack_isempty(stack)){
-    printf("stack is empty");
-    exit(-7);
+    printf("\nstack is empty\n");
+    exit(EXIT_FAILURE);
   }
   return sll_node_get_value(stack->top);
 }
 
-//Funcion que retorna true si el stack esta vacio y false si no lo esta
+/**
+ * @brief return true if the stack is empty and false otherwise.
+ * 
+ * @param stack 
+ * @return true 
+ * @return false 
+ */
 bool stack_isempty(stack_t* stack){
   if(stack == NULL){
-    printf("stack pointer is NULL");
-    exit(-8);
+    printf("\nstack pointer is NULL(5)\n");
+    exit(EXIT_FAILURE);
   }
-  bool retuned = false;
-  if(stack->count == 0){
-    retuned = true;
-  }
-  return retuned;
+  return (stack->count == 0);
 }
 
-//Funcion que retorna true si el stack esta lleno y false si no lo esta
+/**
+ * @brief return true if the stack is full and false otherwise.
+ * 
+ * @param stack 
+ * @return true 
+ * @return false 
+ */
 bool stack_isfull(stack_t* stack){
-  if(stack == NULL){
-    printf("stack pointer is NULL");
-    exit(-9);
+ if(stack == NULL){
+    printf("\nstack pointer is NULL(6)\n");
+    exit(EXIT_FAILURE);
   }
-  bool retuned = false;
-  if(stack->count == stack->maxsize){
-    retuned = true;
-  }
-  return retuned;
+  return (stack->count == stack->maxsize);
 }
 
-//Procedimiento para imprimir el contenido de un stack
+/**
+ * @brief print a stack.
+ * 
+ * @param stack 
+ * @param printf_elem 
+ */
 void stack_printf(stack_t* stack,void (*printf_elem)(t_elem)){
   if(stack == NULL){
-    printf("stack pointer is NULL");
-    exit(-10);
+    printf("\nstack pointer is NULL(7)\n");
+    return;
   }
   if(!stack_isempty(stack)){
     t_elem auxiliar = pop(stack);
@@ -121,11 +160,17 @@ void stack_printf(stack_t* stack,void (*printf_elem)(t_elem)){
   }
 }
 
-//Procedimento para recorrer el stack usando una variable de contexto.
+/**
+ * @brief traverse a stack using a context variable.
+ * 
+ * @param stack 
+ * @param stack_do 
+ * @param context 
+ */
 void stack_traverse(stack_t* stack,bool stack_do(t_elem,void*),void* context){
   if(stack == NULL){
-    printf("stack pointer is NULL");
-    exit(-11);
+    printf("\nstack pointer is NULL(8)\n");
+    return;
   }
   if(!stack_isempty(stack) && stack_do(top(stack),context)){
     t_elem auxiliar = pop(stack);

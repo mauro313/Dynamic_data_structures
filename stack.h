@@ -14,7 +14,7 @@ void stack_free(stack_t** stack);
 
 int stack_getsize(stack_t* stack);
 
-int push(stack_t* stack, t_elem elem);
+bool push(stack_t* stack, t_elem elem);
 
 t_elem pop(stack_t* stack);
 
