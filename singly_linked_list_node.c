@@ -170,7 +170,7 @@ void sll_node_add_node_end_recursive(sll_node_t** head,sll_node_t* new_node){
 }
 
 /**
- * @brief add a element at the end of a list of linked nodes.
+ * @brief add an element at the end of a list of linked nodes.
  *
  * @param head
  * @param value
@@ -185,7 +185,7 @@ void sll_node_add_value_end(sll_node_t** head,t_elem value){
 }
 
 /**
- * @brief add a element at the begin of a list of linked nodes.
+ * @brief add an element at the begin of a list of linked nodes.
  *
  * @param head
  * @param value
