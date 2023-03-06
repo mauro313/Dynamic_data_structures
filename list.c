@@ -78,7 +78,7 @@ int list_length(list_t* list){
 }
 
 /**
- * @brief insert a element in a specific position.Return true if the element was inserted and false otherwise(list full).
+ * @brief insert an element in a specific position.Return true if the element was inserted and false otherwise(list full).
  * 
  * @param list 
  * @param index 
@@ -137,7 +137,7 @@ t_elem list_get(list_t* list, int index){
 }
 
 /**
- * @brief search a element in a list of linked nodes.Return the index of the element if exist and the
+ * @brief search an element in a list of linked nodes.Return the index of the element if exist and the
  * maxsize otherwise.
  * 
  * @param list 

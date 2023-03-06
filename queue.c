@@ -22,7 +22,7 @@ queue_t* queue_new (int maxsize){
 }
 
 /**
- * @brief free the memory of a stack
+ * @brief free the memory of a queue
  * 
  * @param queue 
  */
@@ -156,7 +156,7 @@ t_elem dequeue(queue_t* queue){
 }
 
 /**
- * @brief allows to see the peek element form a queue.
+ * @brief allows to see the peek element of a queue.
  * 
  * @param queue 
  * @return t_elem 

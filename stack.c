@@ -48,7 +48,7 @@ int stack_getsize(stack_t* stack){
 }
 
 /**
- * @brief introdue an element in a stack. Return true if the element was pushed and false otherwise (stack full). 
+ * @brief introduce an element in a stack. Return true if the element was pushed and false otherwise (stack full). 
  * 
  * @param stack 
  * @param elem 
